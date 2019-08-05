@@ -6,8 +6,9 @@ import pymysql
 import psycopg2
 import pymssql
 import cx_Oracle as oracle
-from pyhive import hive
 import pandas as pd 
+from pyhive import hive
+from cassandra.cluster import Cluster
 
 class db_utils:
 	"""
@@ -86,3 +87,29 @@ class db_utils:
 			raise e
 
 		return df
+
+	def get_cassandra_connection(self,hosts):
+		"""
+		Function to get Cassandra Connection
+
+		Parameter
+		---------
+
+		hosts : List[str] - List of IPs
+
+
+		Return
+		------
+
+		session : Cassandra Session
+
+		"""
+		if not isinstance(hosts,list):
+			raise Exception('hosts are expected in List')
+		try:
+			cluster = Cluster(hosts)
+			cassandra_session = cluster.connect()
+		except Exception as e:
+			raise Exception("Error in cassandra database connection")
+		print("------------ Cassandra connection created ---------------")
+		return cassandra_session
