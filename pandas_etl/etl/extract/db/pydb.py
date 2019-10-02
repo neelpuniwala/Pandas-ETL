@@ -36,31 +36,17 @@ def connect_database(db_type,host,username,password,port,db_name):
 	Exception - db_type pass which is not supported
 
 	"""
-	conn_dict = {
-		'mysql' : pymysql.connect(host=host, port=port, user=username, passwd=password, db=db_name),
-		'mariadb' : pymysql.connect(host=host, port=port, user=username, passwd=password, db=db_name),
-		'rds' : pymysql.connect(host=host, port=port, user=username, passwd=password, db=db_name),
-		'postgresql' : psycopg2.connect(host=host, port=port, user=username, password=password, dbname=db_name),
-		'redshift' : psycopg2.connect(host=host, port=port, user=username, password=password, dbname=db_name),
-		'mssql' : pymssql.connect(host=host, port=port, user=username, password=password, database=db_name),
-		'oracle' : oracle.connect(username+'/'+password+'@'+host+':'+str(port)+'/'+db_name),
-		'hive' : hive.connect(host=host, port=port, username=username, password = password, database=db_name)
-	}
-
-	# if db_type.lower() in ['mysql','mariadb','rds'] :
-	# 	conn = pymysql.connect(host=host, port=port, user=username, passwd=password, db=db_name)
-	# elif db_type.lower() in ['postgresql','redshift'] :
-	# 	conn = psycopg2.connect(host=host, port=port, user=username, password=password, dbname=db_name)
-	# elif db_type.lower() in ['mssql'] :
-	# 	conn = pymssql.connect(host=host, port=port, user=username, password=password, database=db_name)
-	# elif db_type.lower() in ['oracle'] :
-	# 	conn = oracle.connect(username+'/'+password+'@'+host+':'+str(port)+'/'+db_name)
-	# elif db_type.lower() in ['hive'] :
-	# 	conn = hive.connect(host=host, port=port, username=username, password = password, database=db_name)
-	
-	conn = conn_dict.get(db_type.lower(),None)
-
-	if conn is None:
+	if db_type.lower() in ['mysql','mariadb','rds'] :
+		conn = pymysql.connect(host=host, port=port, user=username, passwd=password, db=db_name)
+	elif db_type.lower() in ['postgresql','redshift'] :
+		conn = psycopg2.connect(host=host, port=port, user=username, password=password, dbname=db_name)
+	elif db_type.lower() in ['mssql'] :
+		conn = pymssql.connect(host=host, port=port, user=username, password=password, database=db_name)
+	elif db_type.lower() in ['oracle'] :
+		conn = oracle.connect(username+'/'+password+'@'+host+':'+str(port)+'/'+db_name)
+	elif db_type.lower() in ['hive'] :
+		conn = hive.connect(host=host, port=port, username=username, password = password, database=db_name)
+	else:
 		raise Exception(db_type+" Database Type is not Supported")
 
 	return conn 
@@ -82,11 +68,7 @@ def read_db_table(connection,query):
 	df : pd.DataFrame - Pandas Dataframe created using reading Data
 
 	"""
-	try:
-		df = pd.read_sql(query,con=connection)
-	except Exception as e:
-		raise e
-
+	df = pd.read_sql(query,con=connection)
 	return df
 
 def get_cassandra_connection(hosts):
@@ -96,7 +78,7 @@ def get_cassandra_connection(hosts):
 	Parameter
 	---------
 
-	hosts : List[str] - List of IPs
+	hosts : List[String] - List of IPs
 
 
 	Return
@@ -106,11 +88,9 @@ def get_cassandra_connection(hosts):
 
 	"""
 	if not isinstance(hosts,list):
-		raise Exception('hosts are expected in List')
-	try:
-		cluster = Cluster(hosts)
-		cassandra_session = cluster.connect()
-	except Exception as e:
-		raise Exception("Error in cassandra database connection")
-	print("------------ Cassandra connection created ---------------")
+		raise Exception('List is expected.')
+	
+	cluster = Cluster(hosts)
+	cassandra_session = cluster.connect()
+
 	return cassandra_session
