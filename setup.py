@@ -16,8 +16,8 @@ except VersionConflict:
 
 
 if __name__ == "__main__":
-    setup(name='Pandas-ETL',
+    setup(name='pyetl',
       version='0.0.1',
-      description='Python ETL Utilities using Pandas',
+      description='ETL Utilities using Python Pandas',
       author='Neel Puniwala',
       author_email='neelpuniwala1996@gmail.com')
