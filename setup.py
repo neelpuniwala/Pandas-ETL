@@ -20,4 +20,5 @@ if __name__ == "__main__":
       version='0.0.1',
       description='ETL Utilities using Python Pandas',
       author='Neel Puniwala',
-      author_email='neelpuniwala1996@gmail.com')
+      author_email='neelpuniwala1996@gmail.com',
+      install_requires=['pymysql','pymssql','psycopg2','cx_Oracle','pyhive','cassandra-driver'])
