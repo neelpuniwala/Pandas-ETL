@@ -17,8 +17,13 @@ except VersionConflict:
 
 if __name__ == "__main__":
     setup(name='pyetl',
+      packages=['pyetl'],
       version='0.0.1',
+      license='MIT',
       description='ETL Utilities using Python Pandas',
       author='Neel Puniwala',
       author_email='neelpuniwala1996@gmail.com',
+      url='https://github.com/neelpuniwala/Pandas-ETL',
+      download_url='https://github.com/neelpuniwala/Pandas-ETL/archive/v0.1-alpha.tar.gz',
+      keywords=['Pandas','ETL','Data Engineering'],
       install_requires=['pymysql','pymssql','psycopg2','cx_Oracle','pyhive','cassandra-driver','pyarrow'])
