@@ -16,8 +16,8 @@ except VersionConflict:
 
 
 if __name__ == "__main__":
-    setup(name='pyetl',
-      packages=['pyetl'],
+    setup(name='etlpy',
+      packages=['etlpy'],
       version='0.0.1',
       license='MIT',
       description='ETL Utilities using Python Pandas',
